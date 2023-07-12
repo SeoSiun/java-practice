@@ -78,4 +78,53 @@ public class ReflectionTest {
             }
         }
     }
+
+    @Test
+    @DisplayName("테스트6 : 리플렉션을 이용해서 가져온 생성자로 인스턴스 생성")
+    public void newInstance() throws InvocationTargetException, InstantiationException, IllegalAccessException {
+        Class<Question> clazz = Question.class;
+        Constructor[] constructors = clazz.getConstructors();
+        Question question = (Question) constructors[0].newInstance("ss", "tt", "ff");
+        assertThat(question).isInstanceOf(Question.class);
+    }
+
+    @Test
+    @DisplayName("테스트7 : 리플렉션을 이용해서 메소드와 각 메소드의 parameter 목록을 반환")
+    public void getMethod() {
+        Class<Question> clazz = Question.class;
+        Method[] methods = clazz.getMethods();
+
+        for (Method method : methods) {
+            logger.debug(method.getName());
+            Class[] parameterTypes = method.getParameterTypes();
+            logger.debug("parameter length : {}", parameterTypes.length);
+            for (Class paramType : parameterTypes) {
+                logger.debug("param type : {}", paramType);
+            }
+        }
+    }
+
+    @Test
+    @DisplayName("테스트8 : 리플렉션을 가져온 메소드 실행")
+    public void invoke() throws InvocationTargetException, IllegalAccessException {
+        Class<Question> clazz = Question.class;
+        Method[] methods = clazz.getMethods();
+        Question question = new Question("ss", "tt", "ff");
+        String s = (String) methods[0].invoke(question);
+        logger.debug("result : {}", s);
+    }
+
+    @Test
+    public void privateFieldAccess() throws NoSuchFieldException, IllegalAccessException {
+        Class<Student> clazz = Student.class;
+
+        Field field = clazz.getDeclaredField("name");
+
+        field.setAccessible(true);
+
+        Student student = new Student();
+        field.set(student, "재성");
+
+        logger.debug(student.getName());
+    }
 }
