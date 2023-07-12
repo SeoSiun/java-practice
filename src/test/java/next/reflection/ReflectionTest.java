@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import static org.assertj.core.api.Assertions.*;
 
 public class ReflectionTest {
@@ -80,7 +81,7 @@ public class ReflectionTest {
     }
 
     @Test
-    @DisplayName("테스트6 : 리플렉션을 이용해서 가져온 생성자로 인스턴스 생성")
+    @DisplayName("테스트6 :  리플렉션을 이용해서 가져온 생성자로 인스턴스 생성")
     public void newInstance() throws InvocationTargetException, InstantiationException, IllegalAccessException {
         Class<Question> clazz = Question.class;
         Constructor[] constructors = clazz.getConstructors();
